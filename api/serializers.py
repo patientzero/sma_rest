@@ -4,19 +4,17 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    speechex = serializers.PrimaryKeyRelatedField(many=True, queryset=SpeechEx.objects.all())
+    speech_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=SpeechEx.objects.all())
+    tapping_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=TappingEx.objects.all())
+    movement_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=MovementEx.objects.all())
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'speechex']
+        fields = ['id', 'username', 'email', 'speech_ex', 'tapping_ex', 'movement_ex']
 
 
 class SpeechExSerializer(serializers.ModelSerializer):
     serializers.ReadOnlyField(source='patient_id.username')
-
-
-    # def create(self, validated_data):
-    #     return super().create(validated_data)
 
     class Meta:
         model = SpeechEx
@@ -28,7 +26,7 @@ class MovementExSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MovementEx
-        fields = ['id', 'movement_id', 'movement_path', 'patient_id']
+        fields = ['id', 'movement_id', 'movement_path', 'movement_file', 'patient_id']
 
 
 class TappingExSerializer(serializers.ModelSerializer):
@@ -36,4 +34,4 @@ class TappingExSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TappingEx
-        fields = ['id', 'tapping_id', 'tapping_path', 'patient_id']
+        fields = ['id', 'tapping_id', 'tapping_path', 'tapping_file', 'patient_id']

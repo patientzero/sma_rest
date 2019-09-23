@@ -32,6 +32,8 @@ class MovementEx(models.Model):
     movement_id = models.CharField(max_length=255, null=False)
     # path to recording
     movement_path = models.CharField(max_length=255, null=False)
+    movement_file = models.FileField(storage=FileSystemStorage(location='movement_ex/'), null=False, default='/', )
+
     # unique patient id, usually based on the android device id and / or email address
     patient_id = models.ForeignKey('auth.User', related_name='movementex', on_delete=models.PROTECT)
 
@@ -50,6 +52,7 @@ class TappingEx(models.Model):
     tapping_path = models.CharField(max_length=255, null=False)
     # unique patient id, usually based on the android device id and / or email address
     patient_id = models.ForeignKey('auth.User', related_name='tappingex', on_delete=models.PROTECT)
+    tapping_file = models.FileField(storage=FileSystemStorage(location='tapping_ex/'), null=False, default='/', )
 
     # Can be overridden, not needed here
     # def save(self, *args, **kwargs):

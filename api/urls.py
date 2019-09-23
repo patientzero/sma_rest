@@ -1,17 +1,21 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import SpeechExListView, SpeechExRUDViewSet, SpeechExView
+from .views import SpeechExCreateView, MovementExCreateView, TappingExCreateView
 from .views import UserDetail, UserList
-from rest_framework import routers
 
 router = DefaultRouter()
-router.register(r'', SpeechExView)
+router.register(r'', SpeechExCreateView)
+movement_router = DefaultRouter()
+movement_router.register(r'', MovementExCreateView)
+tapping_router = DefaultRouter()
+tapping_router. register(r'', TappingExCreateView)
+
 
 urlpatterns = [
-    path('speech/', include(router.urls)),
-    path('speechex/', SpeechExListView.as_view(), name='speechex-list'),
-    path('speechex/<int:pk>', SpeechExRUDViewSet.as_view(), name='speechex-detail'),
+    path('speechex/', include(router.urls)),
+    path('movementex/', include(movement_router.urls)),
+    path('tappingex/', include(tapping_router.urls)),
     path('user/', UserList.as_view()),
     path('user/<int:pk>/', UserDetail.as_view()),
 ]

@@ -84,7 +84,7 @@ INSTALLED_APPS = [
 
 SWAGGER_SETTINGS = {
     'JSON_EDITOR': True,
-    'DOC_EXPANSION':'list'
+    'DOC_EXPANSION': 'list'
 
 }
 
@@ -118,7 +118,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'sma_rest.wsgi.application'
-
+#
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -128,6 +128,18 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'apkinsons',
+#         'USER': 'postgres',
+#         'PASSWORD': 'mysecretpassword',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
