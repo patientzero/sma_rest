@@ -82,6 +82,12 @@ INSTALLED_APPS = [
     'api.apps.SmaBackendConfig',
 ]
 
+SWAGGER_SETTINGS = {
+    'JSON_EDITOR': True,
+    'DOC_EXPANSION':'list'
+
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # Manages sessions across requests
@@ -112,7 +118,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'sma_rest.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
