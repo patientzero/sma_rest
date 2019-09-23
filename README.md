@@ -1,6 +1,7 @@
 # SMA Backend
+Backend for the Android Project: 
+["Speech and Movement Analysis using your SMArt phone for neurological diseases - (SMA)^2"](https://github.com/jcvasquezc/SMA2)
 
-Backend for SMA2, programmed at SMA workshop
 
 ## ToDo:
 

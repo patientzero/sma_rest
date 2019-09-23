@@ -8,17 +8,31 @@ from django.http import Http404
 from rest_framework import generics, mixins
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from .serializers import SpeechExSerializer, UserSerializer
 from rest_framework import status
 from .permissions import IsOwnerOrReadOnly
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from rest_framework.generics import GenericAPIView
+from rest_framework.decorators import api_view
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import FormParser, MultiPartParser, FileUploadParser
 
+
+@parser_classes([MultiPartParser])
+class SpeechExView(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = SpeechEx.objects.all()
+    serializer_class = SpeechExSerializer
+    def create(self, request, *args, **kwargs):
+
+        return super().create(request, *args, **kwargs)
 
 
 class SpeechExListView(APIView):
     """
-    List all snippets, or create a new snippet.
+    List all speech exercises, or create a new snippet.
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
@@ -28,6 +42,8 @@ class SpeechExListView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+
+
         # TODO: Check file input, if exists, else correct status code
         wav = request.data['data']
         wavfolder = 'speech_ex/'  # TODO: make location configurable, default location == MEDIA_ROOT, in fs.save realtive to MEDIA_ROOT
