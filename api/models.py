@@ -60,3 +60,31 @@ class TappingEx(models.Model):
 
     def __str__(self):
         return "{} - {} - {} - {}".format(self.id, self.tapping_id, self.tapping_path, self.patient_id)
+
+
+class Metadata (models.Model):
+
+    phone_number = models.CharField(max_length=30)
+
+    gender = models.CharField(max_length=30)
+
+    birthday = models.IntegerField()
+
+    smoker = models.BooleanField()
+
+    year_diag = models.IntegerField(default='0')
+
+    other_disorder = models.CharField(max_length=250, default='empty')
+
+    educational_level = models.IntegerField()
+
+    weight = models.IntegerField(default='0')
+
+    height = models.IntegerField(default='0',)
+
+    session = models.IntegerField()
+
+    patient_id = models.ForeignKey('auth.User', related_name='metadata', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return "{} - {} - {} - {} - {} - {} - {} - {} - {}- {} - {} - {}".format(self.id, self.phone_number, self.gender, self.birthday, self.smoker, self.year_diag, self.other_disorder, self.educational_level, self.weight, self.height, self.session, self.patient_id)

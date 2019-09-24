@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .serializers import SpeechExSerializer, UserSerializer
 from .serializers import MovementExSerializer, MovementEx
 from .serializers import TappingExSerializer, TappingEx
+from .serializers import MetadataSerializer, Metadata
 
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
@@ -41,6 +42,15 @@ class TappingExCreateView(GenericViewSet, mixins.CreateModelMixin):
     queryset = TappingEx.objects.all()
     serializer_class = TappingExSerializer
 
+    def create(self, request, *args, **kwargs):
+
+        return super().create(request, *args, **kwargs)
+
+
+class MetadataCreateView(GenericViewSet, mixins.CreateModelMixin):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Metadata.objects.all()
+    serializer_class = MetadataSerializer
     def create(self, request, *args, **kwargs):
 
         return super().create(request, *args, **kwargs)
