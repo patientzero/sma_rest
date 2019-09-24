@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SpeechEx, MovementEx, TappingEx
+from .models import SpeechEx, MovementEx, TappingEx, Medication
 from django.contrib.auth.models import User
 
 
@@ -7,10 +7,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     speech_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=SpeechEx.objects.all())
     tapping_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=TappingEx.objects.all())
     movement_ex = serializers.PrimaryKeyRelatedField(many=True, queryset=MovementEx.objects.all())
+    medication = serializers.PrimaryKeyRelatedField(many=True, queryset=Medication.objects.all())
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'speech_ex', 'tapping_ex', 'movement_ex']
+        fields = ['id', 'username', 'email', 'speech_ex', 'tapping_ex', 'movement_ex', 'medication']
 
 
 class SpeechExSerializer(serializers.ModelSerializer):
@@ -35,3 +36,11 @@ class TappingExSerializer(serializers.ModelSerializer):
     class Meta:
         model = TappingEx
         fields = ['id', 'tapping_id', 'tapping_path', 'tapping_file', 'patient_id']
+
+
+class MedicationSerializer(serializers.ModelSerializer):
+    serializers.ReadOnlyField(source='patient_id.username')
+
+    class Meta:
+        model = Medication
+        fields = ['id', 'patient_id', 'medication_name', 'medication_dose', 'medication_time']
