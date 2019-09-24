@@ -18,7 +18,7 @@ class SpeechEx(models.Model):
     recording_file = models.FileField(storage=FileSystemStorage(location='speech_ex/'), null=False, default='/', )
     # filefield with local storage backend
     # unique patient id, usually based on the android device id and / or email address
-    patient_id = models.ForeignKey('auth.User', related_name='speechex', on_delete=models.PROTECT)
+    patient_id = models.ForeignKey('auth.User', related_name='speechex', on_delete=models.PROTECT, null=True)
 
     # filefield with local storage backend
     # Can be overridden, not needed here
@@ -37,7 +37,7 @@ class MovementEx(models.Model):
     movement_file = models.FileField(storage=FileSystemStorage(location='movement_ex/'), null=False, default='/', )
 
     # unique patient id, usually based on the android device id and / or email address
-    patient_id = models.ForeignKey('auth.User', related_name='movementex', on_delete=models.PROTECT)
+    patient_id = models.ForeignKey('auth.User', related_name='movementex', on_delete=models.PROTECT, null=True)
 
     # Can be overridden, not needed here
     # def save(self, *args, **kwargs):
@@ -53,7 +53,7 @@ class TappingEx(models.Model):
     # path to recording
     tapping_path = models.CharField(max_length=255, null=False)
     # unique patient id, usually based on the android device id and / or email address
-    patient_id = models.ForeignKey('auth.User', related_name='tappingex', on_delete=models.PROTECT)
+    patient_id = models.ForeignKey('auth.User', related_name='tappingex', on_delete=models.PROTECT, null=True)
     tapping_file = models.FileField(storage=FileSystemStorage(location='tapping_ex/'), null=False, default='/', )
 
     # Can be overridden, not needed here
@@ -66,7 +66,7 @@ class TappingEx(models.Model):
 
 class Medication(models.Model):
     # Patient medication relation
-    patient_id = models.ForeignKey('auth.User', related_name='medication', on_delete=models.PROTECT)
+    patient_id = models.ForeignKey('auth.User', related_name='medication', on_delete=models.PROTECT, null=True)
     # Name of medication
     medication_name = models.CharField(max_length=255, null=False)
     # Medication dose

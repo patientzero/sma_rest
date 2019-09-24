@@ -20,7 +20,11 @@ class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):
     permission_classes = [permissions.IsAuthenticated]
     queryset = SpeechEx.objects.all()
     serializer_class = SpeechExSerializer
+
     def create(self, request, *args, **kwargs):
+        
+        request.data._mutable = True
+        request.data.update({"patient_id": request.user.id})
 
         return super().create(request, *args, **kwargs)
 
@@ -33,6 +37,9 @@ class MovementExCreateView(GenericViewSet, mixins.CreateModelMixin):
 
     def create(self, request, *args, **kwargs):
 
+        request.data._mutable = True
+        request.data.update({"patient_id": request.user.id})
+
         return super().create(request, *args, **kwargs)
 
 
@@ -44,6 +51,9 @@ class TappingExCreateView(GenericViewSet, mixins.CreateModelMixin):
 
     def create(self, request, *args, **kwargs):
 
+        request.data._mutable = True
+        request.data.update({"patient_id": request.user.id})
+
         return super().create(request, *args, **kwargs)
 
 
@@ -54,6 +64,9 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     serializer_class = MedicationSerializer
 
     def create(self, request, *args, **kwargs):
+
+        request.data._mutable = True
+        request.data.update({"patient_id": request.user.id})
 
         return super().create(request, *args, **kwargs)
 
