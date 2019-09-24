@@ -15,19 +15,16 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n0kj%5^0!$9my(kv(keuub&j4s325^^swkjj@8ct&$7sxn2!a8'
+SECRET_KEY = '{}'.format(os.environ['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 # 'DEFAULT_AUTHENTICATION_CLASSES': (),
 REST_FRAMEWORK = {
@@ -103,7 +100,7 @@ ROOT_URLCONF = 'sma_rest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, '../../templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,23 +121,14 @@ WSGI_APPLICATION = 'sma_rest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': f'{os.environ.get("DB_NAME")}',
+        'USER': f'{os.environ.get("DB_USER")}',
+        'PASSWORD': f'{os.environ.get("DB_PASSWORD")}',
+        'HOST': f'{os.environ.get("DB_HOST")}',
+        'PORT': f'{os.environ.get("DB_PORT")}',
     }
 }
-
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'apkinsons',
-#         'USER': 'postgres',
-#         'PASSWORD': 'mysecretpassword',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -179,3 +167,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+import os
+db_passwd = os.environ.get('MY_DB_PASSWORD', 'default-db-password')

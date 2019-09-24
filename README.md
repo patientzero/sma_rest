@@ -6,7 +6,7 @@ Backend for the Android Project:
 ## ToDo:
 
 - [ ] TDD? 
-- [ ] Document api
+- [x] Document api
 - [ ] DB Schema
 - [ ] Config Management
 - [ ] CI (travis)
