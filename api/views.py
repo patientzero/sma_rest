@@ -9,7 +9,9 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .serializers import SpeechExSerializer, UserSerializer
 from .serializers import MovementExSerializer, MovementEx
 from .serializers import TappingExSerializer, TappingEx
+from .serializers import MetadataSerializer, Metadata
 from .serializers import MedicationSerializer, Medication
+
 
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
@@ -67,6 +69,15 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
 
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
+
+        return super().create(request, *args, **kwargs)
+
+
+class MetadataCreateView(GenericViewSet, mixins.CreateModelMixin):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Metadata.objects.all()
+    serializer_class = MetadataSerializer
+    def create(self, request, *args, **kwargs):
 
         return super().create(request, *args, **kwargs)
 

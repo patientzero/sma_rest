@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SpeechEx, MovementEx, TappingEx, Medication
+from .models import SpeechEx, MovementEx, TappingEx, Metadata, Medication
 from django.contrib.auth.models import User
 
 
@@ -36,6 +36,14 @@ class TappingExSerializer(serializers.ModelSerializer):
     class Meta:
         model = TappingEx
         fields = ['id', 'tapping_id', 'tapping_path', 'tapping_file', 'patient_id']
+
+
+class MetadataSerializer(serializers.ModelSerializer):
+    serializers.ReadOnlyField(source='patient_id.username')
+
+    class Meta:
+        model = Metadata
+        fields =['id', 'phone_number', 'gender', 'birthday', 'smoker', 'year_diag', 'other_disorder', 'educational_level', 'weight', 'height', 'session', 'patient_id']
 
 
 class MedicationSerializer(serializers.ModelSerializer):
