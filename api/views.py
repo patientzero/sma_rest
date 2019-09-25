@@ -16,6 +16,8 @@ from .serializers import MedicationSerializer, Medication
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 
+from .tasks import celery_test
+
 
 @parser_classes([MultiPartParser])
 class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):
@@ -65,10 +67,13 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     queryset = Medication.objects.all()
     serializer_class = MedicationSerializer
 
+
     def create(self, request, *args, **kwargs):
 
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
+
+        celery_test.delay()
 
         return super().create(request, *args, **kwargs)
 
@@ -77,6 +82,7 @@ class MetadataCreateView(GenericViewSet, mixins.CreateModelMixin):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Metadata.objects.all()
     serializer_class = MetadataSerializer
+
     def create(self, request, *args, **kwargs):
 
         return super().create(request, *args, **kwargs)
