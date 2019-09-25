@@ -11,12 +11,25 @@ from django.core.files.storage import FileSystemStorage
 
 
 class SpeechEx(models.Model):
+    task = (
+        ('1', 'Sentence'),
+        ('2', 'Vowel'),
+        ('3', 'DDK'),
+        ('4', 'Free'),
+    )
+
     # unique recording id
     recording_id = models.CharField(max_length=255, null=False)
     # path to recording
     recording_path = models.CharField(max_length=255, blank=True)  # custom validator moeglich
     recording_file = models.FileField(storage=FileSystemStorage(location='speech_ex/'), null=False, default='/', )
     # filefield with local storage backend
+    
+    #Task kind options (Sentence, Vowel, DDK, Free)
+    task_kind = models.CharField(max_length=1, choices=task,default='1')
+    # Check whether the metrics were calculated (True or False)
+    is_done = models.BooleanField(default=False)
+
     # unique patient id, usually based on the android device id and / or email address
     patient_id = models.ForeignKey('auth.User', related_name='speechex', on_delete=models.PROTECT, null=True)
 
@@ -26,7 +39,7 @@ class SpeechEx(models.Model):
     #     super(SpeechEx, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "{} - {} - {} - {}".format(self.id, self.recording_id, self.recording_path, self.patient_id)
+        return "{} - {} - {} - {} - {} - {}".format(self.id, self.recording_id, self.recording_path, self.task_kind, self.is_done, self.patient_id)
 
 
 class MovementEx(models.Model):
