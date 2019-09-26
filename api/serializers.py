@@ -19,7 +19,7 @@ class SpeechExSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SpeechEx
-        fields = ['id', 'recording_id', 'recording_path', 'recording_file', 'patient_id']
+        fields = ['id', 'recording_id', 'recording_path', 'recording_file', 'task_kind', 'is_done', 'patient_id']
 
 
 class MovementExSerializer(serializers.ModelSerializer):
