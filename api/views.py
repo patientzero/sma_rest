@@ -61,7 +61,6 @@ class TappingExCreateView(GenericViewSet, mixins.CreateModelMixin):
         return super().create(request, *args, **kwargs)
 
 
-@parser_classes([MultiPartParser])
 class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.RetrieveModelMixin):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Medication.objects.all()
