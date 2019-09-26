@@ -19,12 +19,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '{}'.format(os.environ['SECRET_KEY'])
+SECRET_KEY = 'n0kj%5^0!$9my(kv(keuub&j4s325^^swkjj@8ct&$7sxn2!a8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False if os.getenv('DEBUG') is None else os.getenv('Debug')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+
 
 # 'DEFAULT_AUTHENTICATION_CLASSES': (),
 REST_FRAMEWORK = {
@@ -76,7 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
-    'api.apps.SmaBackendConfig',
+    'api.apps.SmaBackendConfig'
 ]
 
 SWAGGER_SETTINGS = {
@@ -115,20 +116,39 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'sma_rest.wsgi.application'
-#
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.getenv('MEDIA_ROOT') or BASE_DIR
+STATIC_ROOT = os.getenv('STATIC_ROOT') or BASE_DIR
+SPEECH_DIR = f'{STATIC_ROOT}/speech_ex'
+TAPPING_DIR = f'{STATIC_ROOT}/tapping_ex'
+MOVEMENT_DIR = f'{STATIC_ROOT}/movement_ex'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+SQLITE_DIR = BASE_DIR if os.getenv("SQLITE_DIR") is None else os.getenv("SQLITE_DIR")
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': f'{os.environ.get("DB_NAME")}',
-        'USER': f'{os.environ.get("DB_USER")}',
-        'PASSWORD': f'{os.environ.get("DB_PASSWORD")}',
-        'HOST': f'{os.environ.get("DB_HOST")}',
-        'PORT': f'{os.environ.get("DB_PORT")}',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(SQLITE_DIR, 'db.sqlite3'),
     }
 }
+
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'apkinsons',
+#         'USER': 'postgres',
+#         'PASSWORD': 'mysecretpassword',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -162,10 +182,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-import os
-db_passwd = os.environ.get('MY_DB_PASSWORD', 'default-db-password')
+# CELERY CONFIGS
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

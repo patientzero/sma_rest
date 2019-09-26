@@ -33,9 +33,9 @@ RUN mkdir $MEDIA_ROOT $STATIC_ROOT $SQLITE_DIR
 # make uWSGI serve sta/tic files at /static
 ENV UWSGI_STATIC_MAP="/static/=$STATIC_ROOT"
 
-RUN ./manage.py collectstatic --settings=sma_rest.settings.local  --noinput
+RUN ./manage.py collectstatic --noinput
 
 EXPOSE 8000
-#VOLUME ["/srv/appdata/media", "/srv/appdata/static", "/srv/appdata/sqlite"]
-ENTRYPOINT ['init-container.sh', 'dev']
+RUN chmod +x /opt/project/entrypoint.sh
+ENTRYPOINT ["/opt/project/entrypoint.sh"]
 CMD ["uwsgi", "uwsgi.ini"]

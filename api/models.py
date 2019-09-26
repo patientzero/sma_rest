@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework import serializers
-
+from sma_rest import settings
 # Create your models here.
 
 
@@ -22,7 +22,8 @@ class SpeechEx(models.Model):
     recording_id = models.CharField(max_length=255, null=False)
     # path to recording
     recording_path = models.CharField(max_length=255, blank=True)  # custom validator moeglich
-    recording_file = models.FileField(storage=FileSystemStorage(location='speech_ex/'), null=False, default='/', )
+    recording_file = models.FileField(storage=FileSystemStorage(location=settings.SPEECH_DIR),
+                                      null=False, default='/')  # TODO discuss implications of FILEPATHFIELD?
     # filefield with local storage backend
     
     #Task kind options (Sentence, Vowel, DDK, Free)
@@ -47,7 +48,7 @@ class MovementEx(models.Model):
     movement_id = models.CharField(max_length=255, null=False)
     # path to recording
     movement_path = models.CharField(max_length=255, null=False)
-    movement_file = models.FileField(storage=FileSystemStorage(location='movement_ex/'), null=False, default='/', )
+    movement_file = models.FileField(storage=FileSystemStorage(location=settings.MOVEMENT_DIR), null=False, default='/', )
 
     # unique patient id, usually based on the android device id and / or email address
     patient_id = models.ForeignKey('auth.User', related_name='movementex', on_delete=models.PROTECT, null=True)
@@ -67,7 +68,7 @@ class TappingEx(models.Model):
     tapping_path = models.CharField(max_length=255, null=False)
     # unique patient id, usually based on the android device id and / or email address
     patient_id = models.ForeignKey('auth.User', related_name='tappingex', on_delete=models.PROTECT, null=True)
-    tapping_file = models.FileField(storage=FileSystemStorage(location='tapping_ex/'), null=False, default='/', )
+    tapping_file = models.FileField(storage=FileSystemStorage(location=settings.TAPPING_DIR), null=False, default='/', )
 
     # Can be overridden, not needed here
     # def save(self, *args, **kwargs):
@@ -75,6 +76,7 @@ class TappingEx(models.Model):
 
     def __str__(self):
         return "{} - {} - {} - {}".format(self.id, self.tapping_id, self.tapping_path, self.patient_id)
+
 
 class Metadata (models.Model):
 
