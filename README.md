@@ -8,17 +8,17 @@ Backend for the Android Project:
 - [ ] TDD? 
 - [x] Document api
 - [ ] DB Schema
-- [ ] Config Management
+- [x] Config Management
 - [ ] CI (travis)
-- [ ] Migrations
-- [ ] Dockerize
-- [ ] DockerCompose 
+- [x] Migrations
+- [x] Dockerize
+- [x] DockerCompose 
     - [ ] postgres 
-    - [ ] nginx proxy
+    - [x] nginx proxy
+    - [ ] https
 
 ## ToDo: Features
 - [ ] register
     - [ ] change device
     - [ ] reset account
 - [ ] token based auth
-- [ ] https
