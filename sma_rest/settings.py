@@ -121,11 +121,11 @@ WSGI_APPLICATION = 'sma_rest.wsgi.application'
 #
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+SQLITE_DIR = BASE_DIR if os.getenv("SQLITE_DIR") is None else os.getenv("SQLITE_DIR")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(SQLITE_DIR, 'db.sqlite3'),
     }
 }
 
