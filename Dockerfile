@@ -36,7 +36,6 @@ ENV UWSGI_STATIC_MAP="/static/=$STATIC_ROOT"
 RUN ./manage.py collectstatic --noinput
 
 EXPOSE 8000
-#VOLUME ["/srv/appdata/media", "/srv/appdata/static", "/srv/appdata/sqlite"]
 RUN chmod +x /opt/project/entrypoint.sh
 ENTRYPOINT ["/opt/project/entrypoint.sh"]
 CMD ["uwsgi", "uwsgi.ini"]
