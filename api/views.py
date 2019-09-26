@@ -16,7 +16,7 @@ from .serializers import MedicationSerializer, Medication
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 
-from .tasks import celery_test
+from .tasks import celery_test, celery_test2
 
 
 @parser_classes([MultiPartParser])
@@ -67,13 +67,14 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     queryset = Medication.objects.all()
     serializer_class = MedicationSerializer
 
-
     def create(self, request, *args, **kwargs):
 
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
 
+        # Celery example tests
         celery_test.delay()
+        celery_test2.delay(8, 9)
 
         return super().create(request, *args, **kwargs)
 
