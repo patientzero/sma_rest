@@ -8,7 +8,7 @@ __pycache__
 /tmp
 db.sqlite3
 *.wav
-
+mounts/
 .coverage
 
 # Byte-compiled / optimized / DLL files
