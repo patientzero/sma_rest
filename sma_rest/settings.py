@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n0kj%5^0!$9my(kv(keuub&j4s325^^swkjj@8ct&$7sxn2!a8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.getenv('DEBUG') is None else os.getenv('Debug')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 
 # 'DEFAULT_AUTHENTICATION_CLASSES': (),
@@ -116,7 +116,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'sma_rest.wsgi.application'
-#
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.getenv('MEDIA_ROOT') or BASE_DIR
+STATIC_ROOT = os.getenv('STATIC_ROOT') or BASE_DIR
+SPEECH_DIR = f'{STATIC_ROOT}/speech_ex'
+TAPPING_DIR = f'{STATIC_ROOT}/tapping_ex'
+MOVEMENT_DIR = f'{STATIC_ROOT}/movement_ex'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 SQLITE_DIR = BASE_DIR if os.getenv("SQLITE_DIR") is None else os.getenv("SQLITE_DIR")
@@ -171,13 +181,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.environ['STATIC_ROOT']
 
 # CELERY CONFIGS
 BROKER_URL = 'redis://localhost:6379'
