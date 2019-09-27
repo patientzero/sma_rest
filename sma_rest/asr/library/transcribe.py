@@ -6,6 +6,8 @@ import subprocess
 
 
 def decode_process(patient_id):
+    import logging
+    logging.log(logging.CRITICAL, "SHITSHITSHIT")
     KALDI_ROOT = os.getenv("KALDI_ROOT")
     if not os.path.isdir(KALDI_ROOT + "/src/bin"):
         print("No Kaldi root. Export it.")

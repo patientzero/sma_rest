@@ -30,7 +30,7 @@ class SpeechEx(models.Model):
     is_done = models.BooleanField(default=False)
 
     # audio transcription
-    transcription = models.CharField(max_length=300,default='')
+    transcription = models.CharField(max_length=300, default='')
 
     # word error rate
     wer = models.CharField(max_length=10,default='')
