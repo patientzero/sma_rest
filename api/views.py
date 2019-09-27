@@ -1,8 +1,12 @@
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import permissions
 from django.contrib.auth.models import User
+
+from sma_rest.asr.library.transcribe import decode_process
 from .models import SpeechEx
 from rest_framework import generics, mixins
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -11,15 +15,11 @@ from .serializers import MovementExSerializer, MovementEx
 from .serializers import TappingExSerializer, TappingEx
 from .serializers import MetadataSerializer, Metadata
 from .serializers import MedicationSerializer, Medication
-import shutil
 
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 
 from .tasks import celery_test, celery_test2
-
-import os
-from sma_rest.settings import local
 
 @parser_classes([MultiPartParser])
 class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):

@@ -1,7 +1,6 @@
 import shutil
 
 from api.models import SpeechEx
-from sma_rest.settings import local
 import os
 import subprocess
 
@@ -35,7 +34,7 @@ def decode_process(patient_id):
                 f.write(utt2spk)
             with open(path_temp + "/text", "w") as f:
                 f.write(utt2spk)
-            subprocess.run('./transcript.sh ' + path_temp, cwd=local.INTEL_ROOT, stdout=True, shell=True)
+            subprocess.run('./transcript.sh ' + path_temp, cwd=INTEL_ROOT, stdout=True, shell=True)
             with open(path_temp + '/transcript') as f:
                 text = f.readlines()
                 for line in text:
@@ -48,7 +47,7 @@ def decode_process(patient_id):
                     entry.transcription = transcription
                     process = subprocess.run(
                         'compute-wer --text  --mode=present \"ark:decode/ref_text\" '
-                        '\"ark:echo {} {} |\"'.format(sentence, transcription), cwd=local.INTEL_ROOT,
+                        '\"ark:echo {} {} |\"'.format(sentence, transcription), cwd=INTEL_ROOT,
                         stdout=subprocess.PIPE, universal_newlines=True, shell=True)
                     wer = process.stdout
                     wer = re.sub(r'%WER (\d{1,}.\d{1,}).*\n.*\n.*\n', r'\1', wer)

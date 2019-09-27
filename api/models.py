@@ -9,6 +9,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 
+from sma_rest import settings
+
 
 class SpeechEx(models.Model):
     task = (
