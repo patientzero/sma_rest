@@ -27,8 +27,10 @@ WORKDIR /opt/project
 ENV \
   MEDIA_ROOT=/srv/appdata/media \
   STATIC_ROOT=/srv/appdata/static \
-  SQLITE_DIR=/srv/appdata/sqlite
-RUN mkdir $MEDIA_ROOT $STATIC_ROOT $SQLITE_DIR
+  SQLITE_DIR=/srv/appdata/sqlite \
+  KALDI_ROOT=/srv/appdata/kaldi \
+  INTEL_ROOT=/srv/appdata/asr
+RUN mkdir $MEDIA_ROOT $STATIC_ROOT $SQLITE_DIR $KALDI_ROOT $INTEL_ROOT
 
 # make uWSGI serve sta/tic files at /static
 ENV UWSGI_STATIC_MAP="/static/=$STATIC_ROOT"

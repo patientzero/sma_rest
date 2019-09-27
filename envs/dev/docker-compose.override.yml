@@ -5,12 +5,15 @@ services:
     build:
       dockerfile: Dockerfile
       context: ../..
+    command: python manage.py runserver 0.0.0.0:8000
     environment:
       - DEBUG=True
     volumes:
       - media:/srv/appdata/media
       - static:/srv/appdata/static
       - sqlite_dir:/srv/appdata/sqlite
+      - kaldi_dir:/srv/appdata/kaldi
+      - intel_dir:/srv/appdata/asr
     ports:
       - 8000:8000 # host:container
   nginx:
@@ -33,16 +36,28 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/bayerl/projects/sma_rest/mounts/media
+      device: /home/luisparra/PycharmProjects/sma_rest/mounts/media
   static:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/bayerl/projects/sma_rest/mounts/static
+      device: /home/luisparra/PycharmProjects/sma_rest/mounts/static
   sqlite_dir:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/bayerl/projects/sma_rest/mounts/sqlite
+      device: /home/luisparra/PycharmProjects/sma_rest/mounts/sqlite
+  kaldi_dir:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/luisparra/Documentos/kaldi
+  intel_dir:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/luisparra/PycharmProjects/sma_rest/sma_rest/asr
