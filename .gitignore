@@ -10,6 +10,7 @@ db.sqlite3
 *.wav
 mounts/
 .coverage
+envs/prod
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
