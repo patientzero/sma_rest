@@ -13,6 +13,8 @@ markdown = "*"
 coreapi = "*"
 django-rest-swagger = "*"
 psycopg2-binary = "*"
+redis = "==2.10.6"
+celery = "==3.1.24"
 
 [requires]
 python_version = "3.6"

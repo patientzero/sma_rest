@@ -1,14 +1,8 @@
-import subprocess
-
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import permissions
 from django.contrib.auth.models import User
-
-from sma_rest.asr.library.transcribe import decode_process
 from .models import SpeechEx
 from rest_framework import generics, mixins
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -21,6 +15,9 @@ import shutil
 
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
+
+from .tasks import celery_test, celery_test2
+
 import os
 from sma_rest.settings import local
 
@@ -34,7 +31,7 @@ class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):
         
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
-        #request.data.update({"recording_path": "speech_ex/"})
+
         return super().create(request, *args, **kwargs)
 
 
@@ -77,6 +74,10 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
 
+        # Celery example tests
+        celery_test.delay()
+        celery_test2.delay(8, 9)
+
         return super().create(request, *args, **kwargs)
 
 
@@ -91,6 +92,7 @@ class MetadataCreateView(GenericViewSet, mixins.CreateModelMixin):
         request.data.update({"patient_id": request.user.id,})
 
         return super().create(request, *args, **kwargs)
+
 
 class UserList(generics.ListAPIView):
     permission_classes = [permissions.IsAdminUser]

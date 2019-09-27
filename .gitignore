@@ -8,9 +8,8 @@ __pycache__
 /tmp
 db.sqlite3
 *.wav
-
+mounts/
 .coverage
-/docker-compose.override.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
