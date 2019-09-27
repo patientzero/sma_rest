@@ -169,3 +169,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 import os
 db_passwd = os.environ.get('MY_DB_PASSWORD', 'default-db-password')
+INTEL_ROOT = os.getenv("INTEL_ROOT")
+KALDI_ROOT = os.getenv("KALDI_ROOT")
