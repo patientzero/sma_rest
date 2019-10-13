@@ -3,7 +3,7 @@ from celery import Celery
 from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sma_rest.settings.local')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sma_rest.settings')
 
 app = Celery('sma_rest', broker='redis://localhost:6379')
 

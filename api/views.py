@@ -16,8 +16,9 @@ from .serializers import MedicationSerializer, Medication
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 
-from .tasks import celery_test, celery_test2
+from .tasks import celery_test, celery_test2, phonet_nasal, phonet_stop, phonet_strident, phonet_sentence_all
 
+import pandas as pd
 
 @parser_classes([MultiPartParser])
 class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):
@@ -30,6 +31,17 @@ class SpeechExCreateView(GenericViewSet, mixins.CreateModelMixin):
         request.data._mutable = True
         request.data.update({"patient_id": request.user.id})
 
+        # TODO: check which kind of speech task class (DDK, Sentence etc.) and perform classifications accordingly
+        if request.data['task_kind'] == "DDK":
+            phonet_result = phonet_stop.delay(request.data['recording_file'])
+            phonet_result = pd.DataFrame(phonet_result)
+            # TODO: Write result to database
+
+        """ For now only the plosives classification
+        phonet_nasal.delay(request.data['recording_file'])
+        phonet_strident.delay(request.data['recording_file'])
+        phonet_sentence_all.delay(request.data['recording_file'])
+        """
         return super().create(request, *args, **kwargs)
 
 
@@ -72,8 +84,8 @@ class MedicationCreateView(GenericViewSet, mixins.CreateModelMixin, mixins.Retri
         request.data.update({"patient_id": request.user.id})
 
         # Celery example tests
-        celery_test.delay()
-        celery_test2.delay(8, 9)
+        # celery_test.delay()
+        # celery_test2.delay(8, 9)
 
         return super().create(request, *args, **kwargs)
 

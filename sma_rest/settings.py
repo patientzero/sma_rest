@@ -64,6 +64,8 @@ SWAGGER_SETTINGS = {
         'title': 'Swagger SMA2 Backend',
     },
     'doc_expansion': 'none',
+    'JSON_EDITOR': True,
+    'DOC_EXPANSION': 'list'
 }
 
 # Application definition
@@ -80,11 +82,6 @@ INSTALLED_APPS = [
     'api.apps.SmaBackendConfig'
 ]
 
-SWAGGER_SETTINGS = {
-    'JSON_EDITOR': True,
-    'DOC_EXPANSION': 'list'
-
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

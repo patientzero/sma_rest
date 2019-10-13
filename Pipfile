@@ -15,6 +15,13 @@ django-rest-swagger = "*"
 psycopg2-binary = "*"
 redis = "==2.10.6"
 celery = "==3.1.24"
+numpy = "*"
+scipy = "*"
+python_speech_features = "*"
+pandas = "*"
+matplotlib = "*"
+keras = "*"
+tensorflow = "==1.14.0"
 
 [requires]
 python_version = "3.6"
